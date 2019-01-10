@@ -13,7 +13,7 @@ exports[`should render ExpenseListItem correclty 1`] = `
   </p>
   <p>
     amount: 
-    195
+    $1.95
      
   </p>
   <p>

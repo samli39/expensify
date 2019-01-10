@@ -2,6 +2,9 @@
 
 exports[`should render Header correctly 1`] = `
 <header>
+  <h1>
+    Expensify
+  </h1>
   <NavLink
     activeClassName="is-actives"
     aria-current="page"
