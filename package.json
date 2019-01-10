@@ -15,6 +15,7 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "enzyme-to-json": "^3.3.5",
+    "express": "^4.16.4",
     "jest": "^23.6.0",
     "live-server": "^1.2.1",
     "mini-css-extract-plugin": "^0.5.0",
@@ -41,7 +42,9 @@
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server --mode=development",
     "test": "jest --config=jest.config.json",
-    "serve": "live-server public/ --port=8081"
+    "serve": "live-server public/ --port=8081",
+    "start": "node server/server.js",
+    "heroku-post-build":"yarn run build:prod"
   },
   "devDependencies": {
     "webpack-cli": "^3.1.2"
