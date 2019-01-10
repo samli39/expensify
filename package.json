@@ -44,7 +44,7 @@
     "test": "jest --config=jest.config.json",
     "serve": "live-server public/ --port=8081",
     "start": "node server/server.js",
-    "heroku-post-build":"yarn run build:prod"
+    "heroku-postbuild":"yarn run build:prod"
   },
   "devDependencies": {
     "webpack-cli": "^3.1.2"
