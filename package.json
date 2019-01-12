@@ -4,12 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.2.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^2.1.0",
@@ -43,6 +43,7 @@
     "heroku-postbuild": "yarn run build:prod"
   },
   "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
     "enzyme": "^3.8.0",

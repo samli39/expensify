@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add babel-plugin-transorm-runtime
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add babel-plugin-transform-runtime --dev
 
 PATH: 
   C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.8.0_131\bin;C:\Program Files\Java\jre1.8.0_131\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files\Git\cmd;C:\Program Files\MongoDB\Server\3.6\bin;C:\Program Files\Sublime Text 3;C:\Program Files\nodejs\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Yarn\bin\;C:\Users\sam\AppData\Local\Microsoft\WindowsApps;;C:\Program Files (x86)\SSH Communications Security\SSH Secure Shell;C:\Users\sam\AppData\Roaming\npm;C:\Program Files\heroku\bin;C:\Users\sam\AppData\Local\Yarn\bin
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/babel-plugin-transorm-runtime: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65003:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:129018:22)
-      at Request.emit (events.js:182:13)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:129990:10)
-      at Request.emit (events.js:182:13)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:129912:12)
-      at Object.onceWrapper (events.js:273:13)
-      at IncomingMessage.emit (events.js:187:15)
-      at endReadableNT (_stream_readable.js:1090:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: EPERM: operation not permitted, copyfile 'C:\Users\sam\AppData\Local\Yarn\Cache\v4\npm-node-pre-gyp-0.12.0-39ba4bb1439da030295f899e3b520b7785766149\node_modules\node-pre-gyp\CHANGELOG.md' -> 'C:\Users\sam\Desktop\cs\html\html_udemy\react2\expensify\node_modules\grpc\node_modules\node-pre-gyp\CHANGELOG.md'
 
 npm manifest: 
   {
@@ -33,6 +23,7 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "dependencies": {
+      "@babel/runtime": "^7.2.0",
       "babel-cli": "^6.26.0",
       "babel-core": "^6.26.3",
       "babel-loader": "7.1.1",
