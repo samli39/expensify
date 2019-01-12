@@ -62,3 +62,26 @@ export const setExpense=(expenses)=>{
 		expenses
 	}
 }
+
+export const startSetExpense=()=>{
+
+	return async(dispatch)=>{
+		const dataArray = [];
+
+		//get the data from firebase
+		const data = await database.ref('expenses')
+			.once('value')
+			.then((snapshot)=>{
+				//convert object to array
+				snapshot.forEach((child)=>{
+					dataArray.push({
+						id:child.key,
+						...child.val()
+					});
+			})
+		})
+
+		//save to redux store
+		return dispatch(setExpense(dataArray));
+	}
+}

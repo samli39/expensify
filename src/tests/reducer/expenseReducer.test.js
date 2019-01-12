@@ -57,6 +57,6 @@ test('should set expense correctly',()=>{
 		note:"abc",
 		createdAt:1000
 	}
-	const result = expenseReducer(expenses,{type:"SET_EXPENSE",expenses:expense});
-	expect(result).toEqual(expense);
+	const result = expenseReducer(expenses,{type:"SET_EXPENSE",expenses:[expense]});
+	expect(result).toEqual([expense]);
 })

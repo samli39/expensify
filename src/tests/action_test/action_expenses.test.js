@@ -3,6 +3,7 @@ import {
 		addExpense,
 		removeExpense,
 		editExpense,
+		startSetExpense,
 		setExpense
 	} from '../../action/action_expenses';
 import configureMockStore from 'redux-mock-store';
@@ -12,6 +13,13 @@ import database from '../../firebase/firebase';
 
 const createMockStore = configureMockStore([thunk]);
 
+beforeEach(async()=>{
+	const expensesData ={};
+	expenses.forEach(({id,description,note,amount,createdAt})=>{
+		expensesData[id]={description,note,amount,createdAt};
+	})
+	await database.ref('expenses').set(expensesData);
+})
 //removeExpense
 test("should remove expense correctly with id ",()=>{
 	const result = removeExpense("123abc");
@@ -58,7 +66,7 @@ test('should add epxense to database and store',async()=>{
 		note:"it is better",
 		createdAt:1000
 	}
-	await store.dispatch(startAddExpense(expenseData)).then(()=>{
+	await store.dispatch(startAddExpense(expenseData)).then(async ()=>{
 		const actions = store.getActions();
 		
 		//test for redux store
@@ -72,7 +80,7 @@ test('should add epxense to database and store',async()=>{
 		})
 		
 		//test for the database
-		database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
+		await database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
 			expect(snapshot.val()).toEqual(expenseData);
 		})
 	});
@@ -86,7 +94,7 @@ test("should add expense to database with default data",async ()=>{
 		note:"",
 		createdAt:0
 	}
-	await store.dispatch(startAddExpense()).then(()=>{
+	await store.dispatch(startAddExpense()).then(async ()=>{
 		const actions = store.getActions();
 		
 		//test for redux store
@@ -100,11 +108,34 @@ test("should add expense to database with default data",async ()=>{
 		})
 
 		//test for database
-		 database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
+		 await database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
 			expect(snapshot.val()).toEqual(expenseDefault);
 		})
 	});
 })
 
+//setExpense
+
+test('should setup expense action object with data',()=>{
+	const action = setExpense(expenses);
+	expect(action).toEqual({
+		type:'SET_EXPENSE',
+		expenses
+	})
+})
+
+//startSetExpense
+test('should fetch data from the database',async()=>{
+	const store = createMockStore();
+	await store.dispatch(startSetExpense()).then(()=>{
+		const actions = store.getActions();
+		//test for redux store
+		expect(actions[0]).toEqual({
+			type:'SET_EXPENSE',
+			expenses
+		})
+	})
+
+})
 
 
