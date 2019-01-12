@@ -1,21 +1,44 @@
-import uuid from 'uuid';
+import database from '../firebase/firebase';
 
-export const addExpense=(
-	{
-		amount=0,
-		createdAt=0,
-		description="",
-		note=""
-
-	}
-	={})=>{
-	const id = uuid();
-	const expense = {amount,createdAt,description,note,id}
+export const addExpense=(expense)=>{
 	return{
 		type:"ADD_EXPENSE",
 		expense
 	}
 
+}
+
+
+//using async/await instead of promise chain
+export const startAddExpense=({
+		amount=0,
+		createdAt=0,
+		description="",
+		note=""
+	}
+	={})=>{
+	return async (dispatch)=>{
+		const expense={
+			amount,
+			createdAt,
+			description,
+			note
+		};
+		try{
+			const ref = await database.ref("expenses")
+				.push(expense)
+				.then((ref)=>{
+					dispatch(addExpense({
+						id:ref.key,
+						...expense
+					}))
+				})
+				return ref;
+		}catch(error){
+			console.log('Dit not work!',error);
+		}
+
+	}
 }
 
 export const removeExpense=(id)=>{
