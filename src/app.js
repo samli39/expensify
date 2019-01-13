@@ -8,6 +8,7 @@ import './firebase/firebase';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
+import {firebase} from './firebase/firebase';
 
 const store =configureStore();
 
@@ -20,7 +21,10 @@ const jsx =(
 		<AppRouter />
 	</Provider>
 )
-
+firebase.auth().onAuthStateChanged((user)=>{
+	(user) ? console.log('log in')
+	: console.log('log out');
+}); 
 ReactDOM.render(<p>Loading...</p>,document.getElementById("app"));
 
 store.dispatch(startSetExpense()).then(()=>{
