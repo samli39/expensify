@@ -1,8 +1,10 @@
 import {
 		startAddExpense,
 		addExpense,
+		startRemoveExpense,
 		removeExpense,
 		editExpense,
+		startEditExpense,
 		startSetExpense,
 		setExpense
 	} from '../../action/action_expenses';
@@ -20,6 +22,8 @@ beforeEach(async()=>{
 	})
 	await database.ref('expenses').set(expensesData);
 })
+
+
 //removeExpense
 test("should remove expense correctly with id ",()=>{
 	const result = removeExpense("123abc");
@@ -27,6 +31,40 @@ test("should remove expense correctly with id ",()=>{
 		type:"REMOVE_EXPENSE",
 		id:"123abc"
 	})
+})
+
+//startRemoveExpense
+test('should remove expense from database and store',async()=>{
+	const store = createMockStore();
+
+	await store.dispatch(startRemoveExpense('1')).then(()=>{
+		const actions = store.getActions();
+		
+		//test for redux store
+		expect(actions[0]).toEqual({
+			type:"REMOVE_EXPENSE",
+			id:'1'
+		})
+
+		//test for database
+		return database.ref('expenses')
+			.once("value")
+			.then((snapshot)=>{
+				const dataArray=[];
+				snapshot.forEach((ele)=>{
+					dataArray.push({
+						id:ele.key,
+						...ele.val()
+					})
+				})
+				return dataArray;
+			})
+	}).then((childData)=>{
+				expect(childData).toEqual([
+						expenses[1],
+						expenses[2]
+					])
+			})
 })
 
 
@@ -45,6 +83,30 @@ test("should edit expense correctly with data",()=>{
 	})
 })
 
+//startEditExpense
+test('should edit expense to data and store',async()=>{
+	const expense={
+		...expenses[0],
+		note:"abc"
+	}
+	const store = createMockStore();
+
+	await store.dispatch(startEditExpense('1',expense)).then(()=>{
+		const actions = store.getActions();
+
+		//test for redux store
+		expect(actions[0]).toEqual({
+			type:"EDIT_EXPENSE",
+			id:'1',
+			update:expense
+		})
+
+		//test for database
+		return database.ref('expenses/1').once('value');
+	}).then((child)=>{
+		expect(child.val()).toEqual(expense);
+	})
+})
 //addExpense
 test("should add epxense with date",()=>{
 
@@ -66,7 +128,7 @@ test('should add epxense to database and store',async()=>{
 		note:"it is better",
 		createdAt:1000
 	}
-	await store.dispatch(startAddExpense(expenseData)).then(async ()=>{
+	await store.dispatch(startAddExpense(expenseData)).then( ()=>{
 		const actions = store.getActions();
 		
 		//test for redux store
@@ -80,7 +142,7 @@ test('should add epxense to database and store',async()=>{
 		})
 		
 		//test for the database
-		await database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
+		return database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
 			expect(snapshot.val()).toEqual(expenseData);
 		})
 	});
@@ -94,7 +156,7 @@ test("should add expense to database with default data",async ()=>{
 		note:"",
 		createdAt:0
 	}
-	await store.dispatch(startAddExpense()).then(async ()=>{
+	await store.dispatch(startAddExpense()).then(()=>{
 		const actions = store.getActions();
 		
 		//test for redux store
@@ -108,7 +170,7 @@ test("should add expense to database with default data",async ()=>{
 		})
 
 		//test for database
-		 await database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
+		 return database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
 			expect(snapshot.val()).toEqual(expenseDefault);
 		})
 	});

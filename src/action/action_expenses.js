@@ -41,10 +41,22 @@ export const startAddExpense=({
 	}
 }
 
+
 export const removeExpense=(id)=>{
 	return{
 		type:"REMOVE_EXPENSE",
 		id
+	}
+}
+
+export const startRemoveExpense=(id)=>{
+	return async (dispatch)=>{
+		const ref = await database.ref(`expenses/${id}`)
+		.remove()
+		.then(()=>{
+			dispatch(removeExpense(id));
+		})
+		return ref;
 	}
 }
 
@@ -53,6 +65,16 @@ export const editExpense=(id,update)=>{
 		type:"EDIT_EXPENSE",
 		id,
 		update
+	}
+}
+
+export const startEditExpense=(id,update)=>{
+	return async(dispatch)=>{
+		const ref = await database.ref(`expenses/${id}`)
+			.update(update).then(()=>{
+				dispatch(editExpense(id,update));
+			})
+		return ref;
 	}
 }
 
