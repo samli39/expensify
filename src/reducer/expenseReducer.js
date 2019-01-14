@@ -1,3 +1,4 @@
+
 export default(state=[],action)=>{
 	switch(action.type){
 		case "ADD_EXPENSE":
@@ -25,6 +26,8 @@ export default(state=[],action)=>{
 
 		case "SET_EXPENSE":
 			return action.expenses;
+		case "LOGOUT":
+			return [];
 		default:
 			return state;
 	}

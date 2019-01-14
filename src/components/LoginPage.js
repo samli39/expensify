@@ -1,9 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {startLogin} from '../action/action_auth';
 
- export default ()=>{
+ export const LoginPage= (props)=>{
 	const login=()=>{
-		startLogin();
+		props.startLogin();
 	}
 
 	return(
@@ -13,3 +14,12 @@ import {startLogin} from '../action/action_auth';
 
 	)
 }
+
+const mapDispatchToProps=(dispatch)=>{
+
+	return{
+		startLogin:()=>dispatch(startLogin())
+	}
+}
+
+export default connect(undefined,mapDispatchToProps)(LoginPage);

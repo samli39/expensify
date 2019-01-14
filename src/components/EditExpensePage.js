@@ -6,12 +6,12 @@ import {startEditExpense,startRemoveExpense} from '../action/action_expenses';
 export const EditExpensePage=(props)=>{
 	const onSubmit=(expense)=>{
 		props.startEditExpense(props.expense.id,expense);
-		props.history.push("/");
+		props.history.push("/dashboard");
 	}
 
 	const remove=()=>{
 		props.startRemoveExpense(props.expense.id);
-		props.history.push('/');
+		props.history.push('/dashboard');
 	}
 
 	return(

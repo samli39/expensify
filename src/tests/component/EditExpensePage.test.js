@@ -25,7 +25,7 @@ test('should render EditExpensePage correctly',()=>{
 test('should handle onSubmit',()=>{
 	wrapper.find('ExpenseForm').prop('onSubmit')(expenses[0]);
 
-	expect(history.push).toHaveBeenCalledWith('/');
+	expect(history.push).toHaveBeenCalledWith('/dashboard');
 	expect(startEditExpense).toHaveBeenCalledWith(expenses[0].id,expenses[0]);
 })
 
@@ -33,5 +33,5 @@ test('should handle remove',()=>{
 	wrapper.find('button').simulate('click');
 
 	expect(startRemoveExpense).toHaveBeenCalledWith(expenses[0].id);
-	expect(history.push).toHaveBeenCalledWith('/');
+	expect(history.push).toHaveBeenCalledWith('/dashboard');
 })
