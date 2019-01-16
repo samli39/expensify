@@ -8,6 +8,8 @@ export const PrivateRoute=({
 		...rest
 		})=>{
 	return(
+		/*why need to pass down props in component??
+	it is because we need to pass down the history,match or other*/
 		<Route {...rest} component={(props)=>(
 			isAuthenticated?(
 				<div>

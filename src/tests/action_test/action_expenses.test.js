@@ -14,13 +14,14 @@ import expenses from '../fixture/expenses';
 import database from '../../firebase/firebase';
 
 const createMockStore = configureMockStore([thunk]);
-
+const uid="thisismytestuid";
+const defaultAuthState={auth:{uid}};
 beforeEach(async()=>{
 	const expensesData ={};
 	expenses.forEach(({id,description,note,amount,createdAt})=>{
 		expensesData[id]={description,note,amount,createdAt};
 	})
-	await database.ref('expenses').set(expensesData);
+	await database.ref(`users/${uid}/expenses`).set(expensesData);
 })
 
 
@@ -35,7 +36,7 @@ test("should remove expense correctly with id ",()=>{
 
 //startRemoveExpense
 test('should remove expense from database and store',async()=>{
-	const store = createMockStore();
+	const store = createMockStore(defaultAuthState);
 
 	await store.dispatch(startRemoveExpense('1')).then(()=>{
 		const actions = store.getActions();
@@ -47,7 +48,7 @@ test('should remove expense from database and store',async()=>{
 		})
 
 		//test for database
-		return database.ref('expenses')
+		return database.ref(`users/${uid}/expenses`)
 			.once("value")
 			.then((snapshot)=>{
 				const dataArray=[];
@@ -89,7 +90,7 @@ test('should edit expense to data and store',async()=>{
 		...expenses[0],
 		note:"abc"
 	}
-	const store = createMockStore();
+	const store = createMockStore(defaultAuthState);
 
 	await store.dispatch(startEditExpense('1',expense)).then(()=>{
 		const actions = store.getActions();
@@ -102,7 +103,7 @@ test('should edit expense to data and store',async()=>{
 		})
 
 		//test for database
-		return database.ref('expenses/1').once('value');
+		return database.ref(`users/${uid}/expenses/1`).once('value');
 	}).then((child)=>{
 		expect(child.val()).toEqual(expense);
 	})
@@ -121,7 +122,7 @@ test("should add epxense with date",()=>{
 
 //startAddExpense
 test('should add epxense to database and store',async()=>{
-	const store = createMockStore({});
+	const store = createMockStore(defaultAuthState);
 	const expenseData={
 		description:"mouse",
 		amount:3000,
@@ -142,14 +143,14 @@ test('should add epxense to database and store',async()=>{
 		})
 		
 		//test for the database
-		return database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
+		return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
 			expect(snapshot.val()).toEqual(expenseData);
 		})
 	});
 })
 
 test("should add expense to database with default data",async ()=>{
-	const store = createMockStore({});
+	const store = createMockStore(defaultAuthState);
 	const expenseDefault={
 		description:"",
 		amount:0,
@@ -170,7 +171,7 @@ test("should add expense to database with default data",async ()=>{
 		})
 
 		//test for database
-		 return database.ref(`expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
+		 return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value').then((snapshot)=>{
 			expect(snapshot.val()).toEqual(expenseDefault);
 		})
 	});
@@ -188,7 +189,7 @@ test('should setup expense action object with data',()=>{
 
 //startSetExpense
 test('should fetch data from the database',async()=>{
-	const store = createMockStore();
+	const store = createMockStore(defaultAuthState);
 	await store.dispatch(startSetExpense()).then(()=>{
 		const actions = store.getActions();
 		//test for redux store

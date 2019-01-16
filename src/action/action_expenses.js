@@ -17,7 +17,8 @@ export const startAddExpense=({
 		note=""
 	}
 	={})=>{
-	return async (dispatch)=>{
+	return async (dispatch,getState)=>{
+		const uid = getState().auth.uid;
 		const expense={
 			amount,
 			createdAt,
@@ -25,19 +26,17 @@ export const startAddExpense=({
 			note
 		};
 		try{
-			const ref = await database.ref("expenses")
-				.push(expense)
-				.then((ref)=>{
-					dispatch(addExpense({
+			
+			const ref= await database.ref(`users/${uid}/expenses`).push(expense);
+			console.log("first");
+				dispatch(addExpense({
 						id:ref.key,
 						...expense
-					}))
-				})
-				return ref;
+					}));
 		}catch(error){
 			console.log('Dit not work!',error);
 		}
-
+		console.log("second");
 	}
 }
 
@@ -50,8 +49,9 @@ export const removeExpense=(id)=>{
 }
 
 export const startRemoveExpense=(id)=>{
-	return async (dispatch)=>{
-		const ref = await database.ref(`expenses/${id}`)
+	return async (dispatch,getState)=>{
+		const uid=getState().auth.uid;
+		const ref = await database.ref(`users/${uid}/expenses/${id}`)
 		.remove()
 		.then(()=>{
 			dispatch(removeExpense(id));
@@ -69,8 +69,9 @@ export const editExpense=(id,update)=>{
 }
 
 export const startEditExpense=(id,update)=>{
-	return async(dispatch)=>{
-		const ref = await database.ref(`expenses/${id}`)
+	return async(dispatch,getState)=>{
+		const uid = getState().auth.uid;
+		const ref = await database.ref(`users/${uid}/expenses/${id}`)
 			.update(update).then(()=>{
 				dispatch(editExpense(id,update));
 			})
@@ -87,11 +88,12 @@ export const setExpense=(expenses)=>{
 
 export const startSetExpense=()=>{
 
-	return async(dispatch)=>{
+	return async(dispatch,getState)=>{
 		const dataArray = [];
+		const uid = getState().auth.uid;
 
 		//get the data from firebase
-		const data = await database.ref('expenses')
+		const data = await database.ref(`users/${uid}/expenses`)
 			.once('value')
 			.then((snapshot)=>{
 				//convert object to array

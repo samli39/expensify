@@ -2,26 +2,32 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ExpenseForm from './ExpenseForm';
 import {startEditExpense,startRemoveExpense} from '../action/action_expenses';
+import {Redirect} from 'react-router-dom';
 
 export const EditExpensePage=(props)=>{
 	const onSubmit=(expense)=>{
-		props.startEditExpense(props.expense.id,expense);
-		props.history.push("/dashboard");
+		props.startEditExpense(props.expense.id,expense).then(()=>{
+			props.history.push("/dashboard");
+		});
 	}
 
 	const remove=()=>{
-		props.startRemoveExpense(props.expense.id);
-		props.history.push('/dashboard');
+		props.startRemoveExpense(props.expense.id).then(()=>{
+			props.history.push('/dashboard');
+		});
 	}
 
 	return(
-		<div>
-			it is Edit expense Page
-			<h1>{props.expense.description}</h1>
-			<ExpenseForm onSubmit={onSubmit} expense={props.expense}/>
-			<button onClick={remove} > remove </button>
-		</div>
-
+		!props.expense ?(
+			<Redirect to="/notFountdPage" />
+		):(
+			<div>
+				it is Edit expense Page
+				<h1>{props.expense.description}</h1>
+				<ExpenseForm onSubmit={onSubmit} expense={props.expense}/>
+				<button onClick={remove} > remove </button>
+			</div>
+		)
 	)
 }
 

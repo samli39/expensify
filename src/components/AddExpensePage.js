@@ -5,9 +5,13 @@ import {startAddExpense} from '../action/action_expenses'
 
 
 export const AddExpensePage=(props)=>{
-	const onSubmit=(expense)=>{
-		props.startAddExpense(expense);
+	const onSubmit=async(expense)=>{
+		console.log("start");
+		await props.startAddExpense(expense);
+		console.log("check point");
 		props.history.push("/dashboard");
+		console.log("end");
+		
 	}
 
 

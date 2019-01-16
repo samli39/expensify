@@ -14,6 +14,7 @@ import 'react-dates/lib/css/_datepicker.css';
 
 const store =configureStore();
 
+
 //why need hasRendered boolean??
 //it is beacuse we only want people who is just visit the login page
 //which mean they haven't loaded the jsx yet

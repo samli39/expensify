@@ -10,11 +10,10 @@ export const Header =(props)=>{
 	return(
 		<header>
 			<h1>Expensify</h1>
-			<NavLink to="/dashboard" activeClassName="is-actives" exact>Home </NavLink>
+			<NavLink to="/dashboard" activeClassName="is-actives" >Home </NavLink>
 			<br />
 			<NavLink to="/create" activeClassName="is-actives">create </NavLink>
 			<br />
-			<NavLink to="/help" activeClassName="is-actives">Help</NavLink>
 			<button onClick={logout}>Logout</button>
 		</header>
 	)
