@@ -37,30 +37,30 @@ const jsx =(
 
 ReactDOM.render(<LoadingPage />,document.getElementById("app"));
 
-// firebase.auth().onAuthStateChanged((user)=>{
-// 	if(user){
-// 		//why this line has to been here
-// 		//instead of in action
-// 		//it is because put it here
-// 		//if the user come back and they already login
-// 		//then it automatically re-render
-// 		store.dispatch(login(user.uid));
-// 			store.dispatch(startSetExpense()).then(()=>{
-// 				renderApp();
+firebase.auth().onAuthStateChanged((user)=>{
+	if(user){
+		//why this line has to been here
+		//instead of in action
+		//it is because put it here
+		//if the user come back and they already login
+		//then it automatically re-render
+		store.dispatch(login(user.uid));
+			store.dispatch(startSetExpense()).then(()=>{
+				renderApp();
 
-// 				//allow people refresh page not  back to login page
-// 				//the if condiiton is for customer in login page
-// 				//then redirect to dashboard
-// 			if(history.location.pathname === '/'){
-// 				history.push('/dashboard');
-// 		}
-// 	});
-// 	}else{
-// 		//renderApp () is for change loading screen back to login page
-// 		//we need this beacuse the history.push is based on AppRouter 
-// 		//which is in the jsx
-// 		store.dispatch(logout());
-// 		renderApp();
-// 		history.push('/'); 
-// 	}
-// }); 
+				//allow people refresh page not  back to login page
+				//the if condiiton is for customer in login page
+				//then redirect to dashboard
+			if(history.location.pathname === '/'){
+				history.push('/dashboard');
+		}
+	});
+	}else{
+		//renderApp () is for change loading screen back to login page
+		//we need this beacuse the history.push is based on AppRouter 
+		//which is in the jsx
+		store.dispatch(logout());
+		renderApp();
+		history.push('/'); 
+	}
+}); 
