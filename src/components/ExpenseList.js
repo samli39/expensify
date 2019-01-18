@@ -5,18 +5,25 @@ import ExpenseListItem from './ExpenseListItem';
 
 //parent:ExpenseDashboardPage
 export const ExpenseList = (props)=>(
-	<div>
-		<h1>Expense List </h1>
-		{
+	<div className="content-container">
+		<div className="list-header">
+			<div>Expenses</div>
+			<div className="show-for-desktop">Amount</div>
+		</div>
+		<div className="list-body">
+			{
 			( props.expenses.length > 0 )?(
 				props.expenses.map((e)=>
 						<ExpenseListItem key={e.id} {...e} />
 					)
 				):(
-					<p> there is no item </p>
+					<div className="list-item list-item--message">
+						<span>No Expenses</span>
+					</div>
 				)
 
 		}
+		</div>
 	</div>
 )
 

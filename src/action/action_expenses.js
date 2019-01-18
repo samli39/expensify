@@ -28,7 +28,6 @@ export const startAddExpense=({
 		try{
 			
 			const ref= await database.ref(`users/${uid}/expenses`).push(expense);
-			console.log("first");
 				dispatch(addExpense({
 						id:ref.key,
 						...expense
@@ -36,7 +35,6 @@ export const startAddExpense=({
 		}catch(error){
 			console.log('Dit not work!',error);
 		}
-		console.log("second");
 	}
 }
 

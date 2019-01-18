@@ -22,10 +22,15 @@ export const EditExpensePage=(props)=>{
 			<Redirect to="/notFountdPage" />
 		):(
 			<div>
-				it is Edit expense Page
-				<h1>{props.expense.description}</h1>
-				<ExpenseForm onSubmit={onSubmit} expense={props.expense}/>
-				<button onClick={remove} > remove </button>
+				<div className="page-header">
+					<div className="content-container">
+						<h1 className="paage-header__title">Edit Expense</h1> 
+					</div>
+				</div>
+				<div className="content-container">
+					<ExpenseForm onSubmit={onSubmit} expense={props.expense}/>
+					<button className="button button--remove" onClick={remove} > Remove Expense </button>
+				</div>
 			</div>
 		)
 	)

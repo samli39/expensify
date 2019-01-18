@@ -6,19 +6,21 @@ import {startAddExpense} from '../action/action_expenses'
 
 export const AddExpensePage=(props)=>{
 	const onSubmit=async(expense)=>{
-		console.log("start");
 		await props.startAddExpense(expense);
-		console.log("check point");
 		props.history.push("/dashboard");
-		console.log("end");
-		
 	}
 
 
 	return(
 		<div>
-			it is add expense Page
-			<ExpenseForm onSubmit={onSubmit}/>
+			<div className="page-header">
+				<div className="content-container">
+					<h1 className="page-header__title">Add Expense</h1>
+				</div>
+			</div>
+			<div className="content-container">
+				<ExpenseForm onSubmit={onSubmit}/>
+			</div>
 		</div>
 
 	)
