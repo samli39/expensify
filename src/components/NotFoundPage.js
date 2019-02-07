@@ -2,7 +2,7 @@ import React from 'react';
 
 const NotFoundPage=()=>(
 	<div>
-		Page Not Found
+		<h1>Page Not Found<h1>
 	</div>
 )
 
